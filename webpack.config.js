@@ -3,7 +3,11 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx", ".wasm"]
+    extensions: [".ts", ".tsx", ".js", ".jsx", ".wasm"],
+    modules: [ 
+      path.resolve(__dirname, "js-bindings"), 
+      "node_modules" 
+    ]
   },
   module: {
     rules: [
