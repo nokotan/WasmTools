@@ -1,3 +1,13 @@
-import { WASIInstance } from "./WASIModule";
+import { wasiInstance } from "./WASIModule";
 
-export = WASIInstance.instance.wasiImport;
+console.log(wasiInstance.wasiImport)
+
+export const { 
+    fd_close, 
+    fd_write, 
+} = wasiInstance.wasiImport;
+
+export const { 
+    fd_fdstat_get, 
+    fd_seek,
+} = wasiInstance.wasiImport;
