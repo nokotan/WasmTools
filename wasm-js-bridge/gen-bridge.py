@@ -78,15 +78,15 @@ def main(argv):
     merger.addFunctionTypeDefinition(exportDefinition)
     merger.transformType()
 
-    classDefs = "\n".join([ FunctionDefinition(comment).toClassFunctionDef() for comment in merger.comments ])
-    indentedClassDefs =  "\n".join([ f"  { line }" for line in classDefs.split("\n") ])
+    classDefs = "\n".join([ FunctionDefinition(comment).toModuleDef() for comment in merger.comments ])
+    indentedClassDefs =  "\n".join([ f"{ line }" for line in classDefs.split("\n") ])
     
     print(f"""
 /* Auto-gererated type definition. */
 
-export declare class WasmModule {{
 { indentedClassDefs }
-}}
+
+export const memory: WebAssembly.Memory;
     """)
 
 if __name__ == "__main__":
