@@ -21,8 +21,30 @@ interface ExportDefinition {
     id: number;
 }
 
+// [ToDo] Eliminate this
+// ast.traverse does not accept objects that have extra members,
+// hide members from Object.keys.
+// (https://stackoverflow.com/questions/40930251/how-to-create-a-typescript-enumerablefalse-decorator-for-a-property/40931839)
+function enumerable(enumerable: boolean) {
+    return function <T>(target: T, propertyKey: string) {
+        Object.defineProperty(target, propertyKey, {
+            set(value: T) {
+                Object.defineProperty(this, propertyKey, {
+                    value,
+                    enumerable,
+                    writable: true
+                });
+            },
+            enumerable,
+            configurable: true,
+        });
+    }
+}
+
 class MyAstVisitor implements Visitor { 
+    @enumerable(false)
     private exports: ExportDefinition[];
+    @enumerable(false)
     private functionDefinitions: FunctionDefinition[];
 
     constructor() {

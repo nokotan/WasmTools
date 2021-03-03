@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:tools": "tsc wasm-js-bridge/*.ts",
+    "build:tools": "tsc wasm-js-bridge/*.ts --experimentalDecorators true",
     "gen-dts": "./wasm-js-bridge/gen-bridge.py ./cpp-lib/bin/WasmLib.wasm ./cpp-lib/src/Main.cpp > ./cpp-lib/bin/WasmLib.wasm.d.ts",
     "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
