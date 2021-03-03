@@ -4,9 +4,10 @@ const wasmAst = require("@webassemblyjs/ast");
 import { readFileSync } from "fs";
 
 interface Visitor {
-    Func(path: any, block: any): void;
-    ModuleExport(path: any): void;
-    ModuleExportDescr(path: any): void;
+    ModuleImport?(path: any): void;
+    Func?(path: any, block: any): void;
+    ModuleExport?(path: any): void;
+    ModuleExportDescr?(path: any): void;
 }
 
 interface FunctionDefinition {
@@ -15,13 +16,30 @@ interface FunctionDefinition {
     results: string[];
 }
 
+interface ExportDefinition {
+    name: string;
+    id: number;
+}
+
 class MyAstVisitor implements Visitor { 
-    private exports: string[];
+    private exports: ExportDefinition[];
     private functionDefinitions: FunctionDefinition[];
 
     constructor() {
         this.exports = [];
         this.functionDefinitions = [];
+    }
+
+    ModuleImport(path: any): void {
+        const node = path.node;
+
+        if (node.descr.type == "FuncImportDescr") {
+            this.functionDefinitions.push({
+                name: node.name.value,
+                params: node.descr.signature.params.map((value: any) => value.valtype),
+                results: node.descr.signature.results
+            });
+        }
     }
 
     Func(path: any, block: any): void {
@@ -35,17 +53,22 @@ class MyAstVisitor implements Visitor {
     }
 
     ModuleExport(path: any): void {
-        // nop
-    }
+        const node = path.node;
 
-    ModuleExportDescr(path: any): void {
-        if (path.node.exportType == "Func") {
-            this.exports.push(path.node.id.value)
+        if (node.descr.exportType == "Func") {
+            this.exports.push({
+                name: node.name,
+                id: node.descr.id.value
+            })
         }
     }
 
     getExports(): FunctionDefinition[] {
-        return this.functionDefinitions.filter((value) => this.exports.includes(value.name));
+        return this.exports.map(_export => {
+            const funcDef = this.functionDefinitions[_export.id];
+            funcDef.name = _export.name;
+            return funcDef;
+        });
     }
 }
 
