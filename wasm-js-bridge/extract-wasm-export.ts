@@ -18,7 +18,7 @@ interface FunctionDefinition {
 
 interface ExportDefinition {
     name: string;
-    id: number;
+    id: number | string;
 }
 
 // [ToDo] Eliminate this
@@ -86,10 +86,16 @@ class MyAstVisitor implements Visitor {
     }
 
     getExports(): FunctionDefinition[] {
-        return this.exports.map(_export => {
-            const funcDef = this.functionDefinitions[_export.id];
-            funcDef.name = _export.name;
-            return funcDef;
+        return this.exports.map<FunctionDefinition>(_export => {
+            if (typeof _export.id == "number") {
+                const funcDef = this.functionDefinitions[_export.id];
+                funcDef.name = _export.name;
+                return funcDef;
+            } else if (typeof _export.id == "string") {
+                return this.functionDefinitions.find(value => value.name == _export.id) as FunctionDefinition;
+            } else {
+                throw "Unexpected Export Type";
+            }
         });
     }
 }
