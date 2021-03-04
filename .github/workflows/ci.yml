@@ -16,7 +16,7 @@ jobs:
             wget git-core cmake   \
             python3 python3-pip   \
             nodejs npm            \
-            libclang-dev
+            libclang-dev clang
 
       - name: Install Python Packages
         run: pip3 install clang
