@@ -95,17 +95,33 @@ class DictionaryGeneratingVisitor:
 
 
 
+def FindLibClang(): str :
+    if name == 'Darwin':
+        dynamicLibPath = '.dylib'
+    elif name == 'Windows':
+        dynamicLibPath = '.dll'
+    else:
+        dynamicLibPath = '.so'
+
+    if os.environ.get("EMSDK"):
+        # There is emscripten installation, use it
+        return os.environ.get("EMSDK") + "/upstream/lib/libclang" + dynamicLibPath
+    else if os.path.exists("/usr/lib/llvm-7/lib/libclang" + dynamicLibPath):
+        return "/usr/lib/llvm-7/lib/libclang" + dynamicLibPath
+    else:
+        raise RuntimeError("There is no libclang installation")
+
 class Executor:
     def __init__(self, walker, generator):
         self.walker = walker
         self.generator = generator
 
-        self.libClangPath = os.environ.get("EMSDK") + "/upstream/lib/"
+        self.libClangPath = FindLibClang()
         self.path = None
         self.args = None
 
     def run(self):
-        Config.set_library_path(self.libClangPath)
+        Config.set_library_file(self.libClangPath)
         
         index = Index.create()
         tree = index.parse(self.path, args=self.args)
