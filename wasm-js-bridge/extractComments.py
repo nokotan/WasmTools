@@ -98,7 +98,7 @@ class DictionaryGeneratingVisitor:
 def FindLibClang():
     import platform
     name = platform.system()
-    
+
     if name == 'Darwin':
         dynamicLibPath = '.dylib'
     elif name == 'Windows':
@@ -111,6 +111,8 @@ def FindLibClang():
         return os.environ.get("EMSDK") + "/upstream/lib/libclang" + dynamicLibPath
     elif os.path.exists("/usr/lib/llvm-7/lib/libclang" + dynamicLibPath):
         return "/usr/lib/llvm-7/lib/libclang" + dynamicLibPath
+    elif os.path.exists("/usr/lib/x86_64-linux-gnu/libclang-7" + dynamicLibPath):
+        return "/usr/lib/x86_64-linux-gnu/libclang-7" + dynamicLibPath
     else:
         raise RuntimeError("There is no libclang installation")
 
