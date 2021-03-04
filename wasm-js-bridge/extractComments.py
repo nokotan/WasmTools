@@ -106,7 +106,7 @@ def FindLibClang():
     if os.environ.get("EMSDK"):
         # There is emscripten installation, use it
         return os.environ.get("EMSDK") + "/upstream/lib/libclang" + dynamicLibPath
-    else if os.path.exists("/usr/lib/llvm-7/lib/libclang" + dynamicLibPath):
+    elif os.path.exists("/usr/lib/llvm-7/lib/libclang" + dynamicLibPath):
         return "/usr/lib/llvm-7/lib/libclang" + dynamicLibPath
     else:
         raise RuntimeError("There is no libclang installation")
