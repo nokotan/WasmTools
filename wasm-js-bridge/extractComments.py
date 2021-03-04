@@ -117,7 +117,7 @@ def FindLibClang():
         ]
 
     for candicate in dynamicLibPathCandicates:
-        if os.path.exists(candicate):
+        if candicate and os.path.exists(candicate):
             return candicate
     
     raise RuntimeError("There is no libclang installation")
