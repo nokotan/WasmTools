@@ -61,7 +61,7 @@ class DictionaryGeneratingVisitor:
     def __init__(self):
         self.definitions = []
 
-    def visitGlobalFunction(self, name: str, cursor):
+    def visitGlobalFunction(self, name, cursor):
         comment = cursor.raw_comment
         mangledName = cursor.mangled_name
         params = [ 
@@ -72,10 +72,10 @@ class DictionaryGeneratingVisitor:
         if mangledName and comment:
             self.definitions.append({ "name": name, "mangledName": mangledName, "params": params, "comment": comment })
 
-    def visitClassDefinition(self, name: str, cursor):
+    def visitClassDefinition(self, name, cursor):
         pass
     
-    def visitClassFunction(self, name: str, cursor):
+    def visitClassFunction(self, name, cursor):
         comment = cursor.raw_comment
         mangledName = cursor.mangled_name
         params = [ 
@@ -95,7 +95,7 @@ class DictionaryGeneratingVisitor:
 
 
 
-def FindLibClang(): str :
+def FindLibClang():
     if name == 'Darwin':
         dynamicLibPath = '.dylib'
     elif name == 'Windows':
