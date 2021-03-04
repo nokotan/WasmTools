@@ -43,6 +43,7 @@ jobs:
       
       - name: Run Build
         run: |
+          chmod +x ./wasm-js-bridge/gen-bridge.py
           npm run build:tools
           npm run gen-dts
           npm run build
