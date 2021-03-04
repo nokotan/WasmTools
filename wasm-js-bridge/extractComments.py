@@ -109,7 +109,7 @@ def FindLibClang():
         ]
     else:
         dynamicLibPathCandicates = [
-            os.environ.get("EMSDK") + "/upstream/lib/libclang,dylib" if os.environ.get("EMSDK") else None,
+            os.environ.get("EMSDK") + "/upstream/lib/libclang.dylib" if os.environ.get("EMSDK") else None,
             # FIXME: Determinstic Path Searching
             "/usr/lib/llvm-7/lib/libclang.so",
             "/usr/lib/llvm-7/lib/libclang.so.1",
