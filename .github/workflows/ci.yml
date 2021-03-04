@@ -14,7 +14,6 @@ jobs:
           sudo apt -qq -y update
           sudo apt -qq -y install \
             wget git-core cmake   \
-            python python-pip     \
             python3 python3-pip   \
             nodejs npm            \
             libclang-dev
