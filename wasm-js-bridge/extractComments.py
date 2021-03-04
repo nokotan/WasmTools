@@ -105,7 +105,7 @@ def FindLibClang():
         ]
     elif name == 'Windows':
         dynamicLibPathCandicates = [
-            os.environ.get("EMSDK") + "/upstream/lib/libclang.dll" if os.environ.get("EMSDK") else None
+            os.environ.get("EMSDK") + "/upstream/bin/libclang.dll" if os.environ.get("EMSDK") else None
         ]
     else:
         dynamicLibPathCandicates = [
