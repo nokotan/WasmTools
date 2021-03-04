@@ -96,6 +96,9 @@ class DictionaryGeneratingVisitor:
 
 
 def FindLibClang():
+    import platform
+    name = platform.system()
+    
     if name == 'Darwin':
         dynamicLibPath = '.dylib'
     elif name == 'Windows':
