@@ -30,6 +30,17 @@ jobs:
           tar xvf wasi-sdk-12.0-linux.tar.gz
           mv wasi-sdk-12.0 wasi
 
+      - name: CMake Build
+        run: |
+          LOCAL_REPOSITORY_FULLPATH=$(pwd)
+          mkdir cpp-lib/bin && cd cpp-lib/bin
+          cmake .. \
+              -DCMAKE_TOOLCHAIN_FILE=../../wasi/share/cmake/wasi-sdk.cmake \
+              -DWASI_SDK_PREFIX="${LOCAL_REPOSITORY_FULLPATH}/wasi" \
+              -DCMAKE_C_FLAGS="--sysroot=\"${LOCAL_REPOSITORY_FULLPATH}/wasi/share/wasi-sysroot\"" \
+              -DCMAKE_CXX_FLAGS="--sysroot=\"${LOCAL_REPOSITORY_FULLPATH}/wasi/share/wasi-sysroot\""
+          make
+      
       - name: Run Build
         run: |
           npm run build:tools
