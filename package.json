@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:tools": "tsc wasm-js-bridge/*.ts --experimentalDecorators true",
-    "gen-dts": "./wasm-js-bridge/gen-bridge.py ./cpp-lib/bin/WasmLib.wasm ./cpp-lib/src/Main.cpp > ./cpp-lib/bin/WasmLib.wasm.d.ts",
-    "build": "webpack",
+    "build:tools": "tsc wasm-js-bridge/extract-wasm-export.ts --experimentalDecorators true",
+    "build:cpp-lib": "cd cpp-lib/bin && cmake --build .",
+    "gen-dts": "python3 ./wasm-js-bridge/gen-bridge.py ./cpp-lib/bin/WasmLib.wasm ./cpp-lib/src/Main.cpp > ./cpp-lib/bin/WasmLib.wasm.d.ts",
+    "build:web": "webpack",
+    "build": "npm run build:cpp-lib && npm run gen-dts && npm run build:web",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
