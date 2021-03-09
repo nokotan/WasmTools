@@ -34,11 +34,8 @@ jobs:
         run: |
           LOCAL_REPOSITORY_FULLPATH=$(pwd)
           mkdir cpp-lib/bin && cd cpp-lib/bin
-          cmake .. \
-              -DCMAKE_TOOLCHAIN_FILE=../../wasi/share/cmake/wasi-sdk.cmake \
-              -DWASI_SDK_PREFIX="${LOCAL_REPOSITORY_FULLPATH}/wasi" \
-              -DCMAKE_C_FLAGS="--sysroot=\"${LOCAL_REPOSITORY_FULLPATH}/wasi/share/wasi-sysroot\"" \
-              -DCMAKE_CXX_FLAGS="--sysroot=\"${LOCAL_REPOSITORY_FULLPATH}/wasi/share/wasi-sysroot\""
+          chmod +x ../InitProject.sh
+          ../InitProject.sh wasi
           make
       
       - name: Run Build
