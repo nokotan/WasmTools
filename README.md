@@ -35,9 +35,9 @@ npm install
 mkdir cpp-lib/bin && cd cpp-lib/bin
 cmake .. \
     -DCMAKE_TOOLCHAIN_FILE=../../wasi/share/cmake/wasi-sdk.cmake \
-    -DWASI_SDK_PREFIX="<ProjectDir>/wasi" \
-    -DCMAKE_C_FLAGS="--sysroot=\"<ProjectDir>/wasi/share/wasi-sysroot\"" \
-    -DCMAKE_CXX_FLAGS="--sysroot=\"<ProjectDir>/wasi/share/wasi-sysroot\""
+    -DWASI_SDK_PREFIX="${ProjectDir}/wasi" \
+    -DCMAKE_C_FLAGS="--sysroot=\"${ProjectDir}/wasi/share/wasi-sysroot\"" \
+    -DCMAKE_CXX_FLAGS="--sysroot=\"${ProjectDir}/wasi/share/wasi-sysroot\""
 make
 ```
 
